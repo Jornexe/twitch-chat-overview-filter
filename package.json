@@ -3,10 +3,10 @@
     "description": "filters out a important messages into another chat window",
     "version": "0.0.1",
     "homepage": "http://chrome.google.com/webstore",
-    "author": "ENTER YOUR NAME HERE",
+    "author": "Jornexe",
     "repository": {
         "type": "git",
-        "url": "ENTER GIT REPO URL"
+        "url": "https://github.com/Jornexe/twitch-chat-overview-filter.git"
     },
     "scripts": {
         "start": "xt-build -e dev -w",

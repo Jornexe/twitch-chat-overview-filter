@@ -5,11 +5,11 @@ let antiSpam = true;
 let subbed = false;
 let minsub = 1;
 let minSubGift = false;
-let minSubGiftAmount = 0;
+let minSubGiftAmount = 1;
 let minCheerMsg = false;
-let minCheerMsgAmount = 0;
+let minCheerMsgAmount = 1;
 let minCheerBadge = false;
-let minCheerBadgeAmount = 0;
+let minCheerBadgeAmount = 1;
 
 
 chrome.runtime.onInstalled.addListener(() => {

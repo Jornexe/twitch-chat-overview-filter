@@ -70,10 +70,25 @@ if (document.getElementById("chatLogDefault") != "undefined" && document.getElem
     chatLogDefault.addEventListener("DOMNodeInserted", function () {
         // Gets all information about message
         if (chatLogDefault.lastChild.lastChild != "undefined" && chatLogDefault.lastChild.lastChild != null) {
-            // ADD: user defined chat filter <--------------
-            
-            // ADD: user defined chat filter <--------------
             var child = chatLogDefault.lastChild.lastChild;
+            // ADD: user defined chat filter <--------------
+            chrome.storage.sync.get("vip", z => {
+                // console.log(z);
+                // console.log(Object.values(z)[0]);
+                if (Object.values(z)[0] ){
+                    if(child.getElementsByClassName("chat-badge").some(e => e.getAttribute("alt") == "VIP")){
+                        console.log("VIP FOUND!");
+                    }
+                    else return;
+                }
+            })
+            if (Object.values(chrome.storage.sync.get("vip"))[0] ){
+                if(child.getElementsByClassName("chat-badge").some(e => e.getAttribute("alt") === "VIP")){
+                    console.log("VIP FOUND!")
+                }
+                else return;
+            }
+            // ADD: user defined chat filter <--------------
             // check if object is from a client.
             if (child.getElementsByClassName("chat-author__display-name")[0] != "undefined" && child.getElementsByClassName("chat-author__display-name")[0] != null) {
                 var childName = child.getElementsByClassName("chat-author__display-name")[0].textContent;
@@ -127,7 +142,9 @@ if (document.getElementById("chatLogDefault") != "undefined" && document.getElem
     );
 }
 function updateScroll() {
-    altChatDivId.scrollTop = altChatDivId.scrollHeight;
+    if (altChatDivId.scrollHeight - altChatDivId.clientHeight <= altChatDivId.scrollTop + 1){
+        altChatDivId.scrollTop = altChatDivId.scrollHeight;
+    }
 }
 
 // jCgbLy
