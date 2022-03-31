@@ -1,0 +1,44 @@
+body {
+  background-color: black;
+  color: white;
+}
+.boptions {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 15vmax;
+  padding: 0;
+  margin: 0;
+}
+.options {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+li {
+    /* text-align: center; */
+  border: solid;
+  border-color: #36393E;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 0.5em;
+}
+h4 {
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+li input[type="checkbox"] {
+    float: right;
+}
+li input[type="text"] {
+    margin-right: 3em;
+}
+li label {
+    position: relative;
+    /* padding-left: %; */
+}

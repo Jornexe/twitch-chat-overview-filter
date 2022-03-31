@@ -6,129 +6,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
-    <link rel="stylesheet" href="./recources/exstyle.css">
+    <link rel="stylesheet" href="./assets/exstyle.css">
     <!-- <script type="module" src="https://unpkg.com/imask"></script> -->
     <!-- <script type="module" src="./imaskk.js"></script> -->
     <title>options</title>
 </head>
 
 <body class="boptions">
-    <div class="options">
+    <div class="options" id="optionsID">
         <ul>
             <li>
                 <h4>Filter options</h5>
             </li>
             <li>
-                <label for="isVIP">Is VIP</label>
-                <input type="checkbox" id="isVIP">
+                <label for="vip">Is VIP</label>
+                <input type="checkbox" class="check" id="vip">
             </li>
             <li>
-                <label for="isMOD">Is MOD</label>
-                <input type="checkbox" id="isMOD">
+                <label for="mod">Is MOD</label>
+                <input type="checkbox" class="check" id="mod">
             </li>
             <li>
-                <label for="isVerified">Is Verified</label>
-                <input type="checkbox" id="isVerified">
+                <label for="verified">Is Verified</label>
+                <input type="checkbox" class="check" id="verified">
             </li>
             <li>
                 <label for="antiSpam">Prevent Repeated Messages</label>
-                <input type="checkbox" id="antiSpam">
+                <input type="checkbox" class="check" id="antiSpam">
             </li>
             <li>
-                <label for="isSUB">Is Subscribed</label>
-                <input type="checkbox" id="isSUB">
+                <label for="subbed">Is Subscribed</label>
+                <input type="checkbox" class="check" id="subbed">
                 <br>
-                <label for="minSubLen">Min Sub (Month)</label>
+                <label for="minsub">Min Sub (Month)</label>
                 <br>
-                <input type="text" class="number" id="minSubLen">
+                <input type="text" class="number" id="minsub">
             </li>
             <li>
-                <label for="minGiftB">Min Sub Gift (Badge)</label>
-                <input type="checkbox" class="minGift" id="minGiftB">
+                <label for="minSubGift">Min Sub Gift (Badge)</label>
+                <input type="checkbox" class="check" id="minSubGift">
                 <br>
-                <label for="minGiftN">Badge Name</label>
-                <input type="text" class="number minGift" id="minGiftN">
+                <label for="minSubGiftAmount">Badge Name</label>
+                <input type="text" class="number" id="minSubGiftAmount">
             </li>
             <li>
-                <label for="minCheer">Min Cheer in Message</label>
-                <input type="checkbox" class="minCheer" id="minCheerB">
+                <label for="minCheerMsg">Min Cheer in Message</label>
+                <input type="checkbox" class="check" id="minCheerMsg">
                 <br>
-                <input type="number" class="number" id="minCheerN">
+                <label for="minCheerMsgAmount">2Min Cheer in Message</label>
+                <input type="number" class="number" id="minCheerMsgAmount">
             </li>
             <li>
-                <label for="minCheerClient">Min Cheer (Badge)</label>
-                <input type="checkbox" class="minCheerClient" id="minCheerClientB">
+                <label for="minCheerBadge">Min Cheer (Badge)</label>
+                <input type="checkbox" class="check" id="minCheerBadge">
                 <br>
-                <input type="text" class="number minCheerClient" id="minCheerClientN">
+                <label for="minCheerBadgeAmount">2Min Cheer (Badge)</label>
+                <input type="text" class="number" id="minCheerBadgeAmount">
             </li>
         </ul>
-    </div>
+    </div> 
 </body>
-<script type="module" src="./options.js"></script>
-<!-- <script type="module">
-    Array.prototype.forEach.call(
-        document.getElementsByClassName("number"),
-        function (x) {
-            var numberMask = IMask(
-                x,
-                {
-                    mask: Number,
-                    min: 0,
-                    thousandsSeparator: ' '
-                });
-        }
-    );
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("================================= LOADED ==================================")
-    let isvip = document.getElementById("isVIP")
-    chrome.storage.sync.get("vip", ({ vip }) => {
-        isvip.setAttribute("value",vip);
-    });
-    let ismod = document.getElementById("isMOD")
-    chrome.storage.sync.get("mod", ({ mod }) => {
-    ismod.setAttribute("value",mod);
-    });
-    let isVerified = document.getElementById("isVerified")
-    chrome.storage.sync.get("verified", ({ verified }) => {
-    isVerified.setAttribute("value",verified);
-    });
-    let antispam = document.getElementById("antispam")
-    chrome.storage.sync.get("antiSpam", ({ antiSpam }) => {
-    antispam.setAttribute("value",antiSpam);
-    });
-    let isSUB = document.getElementById("isSUB")
-    chrome.storage.sync.get("subbed", ({ subbed }) => {
-    isSUB.setAttribute("value",subbed);
-    });
-    let minSubLen = document.getElementById("minSubLen")
-    chrome.storage.sync.get("minsub", ({ minsub }) => {
-    minSubLen.setAttribute("value",minsub);
-    });
-    let minGiftB = document.getElementById("minGiftB")
-    chrome.storage.sync.get("minSubGift", ({ minSubGift }) => {
-    minGiftB.setAttribute("value",minSubGift);
-    });
-    let minGiftN = document.getElementById("minGiftN")
-    chrome.storage.sync.get("minSubGiftAmount", ({ minSubGiftAmount }) => {
-    minGiftN.setAttribute("value",minSubGiftAmount);
-    });
-    let minCheerB = document.getElementById("minCheerB")
-    chrome.storage.sync.get("minCheerMsg", ({ minCheerMsg }) => {
-    minCheerB.setAttribute("value",minCheerMsg);
-    });
-    let minCheerN = document.getElementById("minCheerN")
-    chrome.storage.sync.get("minCheerMsgAmount", ({ minCheerMsgAmount }) => {
-    minCheerN.setAttribute("value",minCheerMsgAmount);
-    });
-    let minCheerClientB = document.getElementById("minCheerClientB")
-    chrome.storage.sync.get("minCheerBadge", ({ minCheerBadge }) => {
-    minCheerClientB.setAttribute("value",minCheerBadge);
-    });
-    let minCheerClientN = document.getElementById("minCheerClientN")
-    chrome.storage.sync.get("minCheerBadgeAmount", ({ minCheerBadgeAmount }) => {
-    minCheerClientN.setAttribute("value",minCheerBadgeAmount);
-    });
-}, false);
-</script> -->
+<script src="./options.js"></script>
 
 </html>

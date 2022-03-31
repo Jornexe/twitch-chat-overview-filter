@@ -66,7 +66,7 @@ if (document.getElementById("chatLogDefault") != "undefined" && document.getElem
         // Gets all information about message
         if (chatLogDefault.lastChild.lastChild != "undefined" && chatLogDefault.lastChild.lastChild != null) {
             // ADD: user defined chat filter <--------------
-
+            
             // ADD: user defined chat filter <--------------
             var child = chatLogDefault.lastChild.lastChild;
             // check if object is from a client.

@@ -1,20 +1,8 @@
 /******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-console.log('This is background service worker - edit me!');
-
-
-})();
-
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
-(() => {
-/*!*******************************!*\
-  !*** ./src/main/oninstall.js ***!
-  \*******************************/
+/*!************************************!*\
+  !*** ./src/main/backgOnInstall.js ***!
+  \************************************/
 let vip = true;
 let mod = true;
 let verified = false;
@@ -43,8 +31,6 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.sync.set({ minCheerBadge });
     chrome.storage.sync.set({ minCheerBadgeAmount });
 });
-})();
-
 /******/ })()
 ;
 //# sourceMappingURL=background.js.map

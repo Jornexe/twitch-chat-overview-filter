@@ -29,6 +29,6 @@
             "32": "assets/img/32x32.png"
         },
         "default_title": "__MSG_appName__",
-        "default_popup": "./options/options.html"
+        "default_popup": "options.html"
     }
 }
