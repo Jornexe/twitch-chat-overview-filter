@@ -5,17 +5,15 @@ var __webpack_exports__ = {};
   \******************************/
 console.log("YEEEEEEEEEEEET", document.getElementById("altChatDiv"));
 document.addEventListener("DOMContentLoaded", loaded(), false);
-window.addEventListener("popstate", loaded(), false);
+window.addEventListener("popstate", function () {
+    console.log("popstate called! ==========================================");
+}, false);
 window.addEventListener("locationchange", function () {
-    console.log("location changed!");
-    console.log("works? ========");
-});
-
+    console.log("locationchange called! ==========================================");
+}, false);
 // fix the event so it calls when switching to another channel and not just on reload or first page load.
-function test() {
-    console.log("works? ========");
-}
-// adds easier identification
+
+// adds easier identification and creates dupe target.
 function loaded() {
     console.log("LOADED CALLLED ----> ", document.readyState);
     if (document.readyState === "interactive") {
@@ -37,6 +35,10 @@ function loaded() {
             Array.prototype.forEach.call(locate, function (x) {
                 x.prepend(altChatDiv);
             });
+            welcome1 = document.createElement("span");
+            welcome1.setAttribute("class", "CoreText-sc-cpl358-0 Layout-sc-nxg1ff-0 chat-line__status");
+            welcome1.innerHTML = "Welcome to the filter!";
+            altChatDiv.appendChild(welcome1);
             Array.prototype.forEach.call(
                 document.getElementsByClassName("ejGzhU"),
                 function (x) {
@@ -62,6 +64,37 @@ function loaded() {
         }
     }
 }
+// temp variables
+vip = true;
+mod = true;
+verified = true;
+antiSpam = true;
+subbed = true;
+minsub = 999999999;
+minSubGift = true;
+minSubGiftAmount = 999999999;
+minCheerMsg = true;
+minCheerMsgAmount = 999999999;
+minCheerBadge = true;
+minCheerBadgeAmount = 999999999;
+
+// updates local variables to match client settings on startup
+chrome.storage.sync.get(null, function(itemsOBJ) {
+    for (var storKey in itemsOBJ){
+        if (itemsOBJ.hasOwnProperty(storKey)){
+            // console.log(storKey, itemsOBJ[storKey]);
+            window[storKey] = itemsOBJ[storKey];
+        }
+    }
+});
+
+// updates local variables when they are changed
+chrome.storage.onChanged.addListener(function(storag){
+    window[Object.keys(storag)[0]] = Object.values(Object.values(storag)[0])[0];
+    console.log(Object.keys(storag)[0], "updated to", Object.values(Object.values(storag)[0])[0]);
+});
+
+// should rework how this is done. if for some reason chatlogdefault does not exist, extension will fail.
 if (document.getElementById("chatLogDefault") != "undefined" && document.getElementById("chatLogDefault") != null) {
     // easier use
     altChatDivId = document.getElementById("altChatDiv");
@@ -72,22 +105,7 @@ if (document.getElementById("chatLogDefault") != "undefined" && document.getElem
         if (chatLogDefault.lastChild.lastChild != "undefined" && chatLogDefault.lastChild.lastChild != null) {
             var child = chatLogDefault.lastChild.lastChild;
             // ADD: user defined chat filter <--------------
-            chrome.storage.sync.get("vip", z => {
-                // console.log(z);
-                // console.log(Object.values(z)[0]);
-                if (Object.values(z)[0] ){
-                    if(child.getElementsByClassName("chat-badge").some(e => e.getAttribute("alt") == "VIP")){
-                        console.log("VIP FOUND!");
-                    }
-                    else return;
-                }
-            })
-            if (Object.values(chrome.storage.sync.get("vip"))[0] ){
-                if(child.getElementsByClassName("chat-badge").some(e => e.getAttribute("alt") === "VIP")){
-                    console.log("VIP FOUND!")
-                }
-                else return;
-            }
+
             // ADD: user defined chat filter <--------------
             // check if object is from a client.
             if (child.getElementsByClassName("chat-author__display-name")[0] != "undefined" && child.getElementsByClassName("chat-author__display-name")[0] != null) {
@@ -141,8 +159,28 @@ if (document.getElementById("chatLogDefault") != "undefined" && document.getElem
         false
     );
 }
+
+function userhasvip(childd) {
+    chrome.storage.sync.get("vip", (z) => {
+        var hv = false;
+        if (Object.values(z)[0]){
+            
+            Array.prototype.forEach.call(
+                childd.getElementsByClassName("chat-badge"),
+                function (x) {
+                    if (x.getAttribute("alt") == "VIP"){
+                        console.log(x.getAttribute("alt"));
+                        hv = true;
+                    }
+                    //console.log(x.getAttribute("alt"));
+                }
+            );
+            
+        }
+    });
+}
 function updateScroll() {
-    if (altChatDivId.scrollHeight - altChatDivId.clientHeight <= altChatDivId.scrollTop + 1){
+    if (altChatDivId.scrollHeight - altChatDivId.clientHeight <= altChatDivId.scrollTop + 1) {
         altChatDivId.scrollTop = altChatDivId.scrollHeight;
     }
 }

@@ -12,7 +12,7 @@ Array.prototype.forEach.call(
                 min: 0,
                 thousandsSeparator: ' '
             });
-        console.log(x.getAttribute("id")+"dyn", window[x.getAttribute("id")+"dyn"])
+        // console.log(x.getAttribute("id")+"dyn", window[x.getAttribute("id")+"dyn"])
         // var numberMask32 = IMask(
         //     x,
         //     {
