@@ -40,22 +40,8 @@ function loaded() {
                     x.setAttribute("style", "height: 40% !important");
                 }
             );
-            // Auto scroll to bottom of altchat. should probably not be in "loaded()". not sure if it works or not.
-            // for (let i = 0; i < 100; i++) {
-            //     altChatDivId = document.getElementById("altChatDiv");
-            //     altChatDivId.innerHTML += "<p>SadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadgeSadge</p>";
-            //     // altChatDivId.scrollTop = altChatDivId.scrollTop;
-            //     var isScrolledToBottom = altChatDivId.scrollHeight - altChatDivId.clientHeight <= altChatDivId.scrollTop + 1;
-            //     if(isScrolledToBottom){
-            //         altChatDivId.scrollTop = altChatDivId.scrollHeight - altChatDivId.clientHeight;
-            //     };
-            // };
-            // add this when data added. (would autoscroll on EVERY new message which would not be ideal)
-            //elem.scrollTop = elem.scrollHeight;
-
-            // allow 1px inaccuracy by adding 1
-
             console.log("YEEEEEEEEEEEET", document.getElementById("altChatDiv"));
+            setupListener();
         }
     }
 }
@@ -74,9 +60,9 @@ minCheerBadge = true;
 minCheerBadgeAmount = 999999999;
 
 // updates local variables to match client settings on startup
-chrome.storage.sync.get(null, function(itemsOBJ) {
-    for (var storKey in itemsOBJ){
-        if (itemsOBJ.hasOwnProperty(storKey)){
+chrome.storage.sync.get(null, function (itemsOBJ) {
+    for (var storKey in itemsOBJ) {
+        if (itemsOBJ.hasOwnProperty(storKey)) {
             // console.log(storKey, itemsOBJ[storKey]);
             window[storKey] = itemsOBJ[storKey];
         }
@@ -84,25 +70,32 @@ chrome.storage.sync.get(null, function(itemsOBJ) {
 });
 
 // updates local variables when they are changed
-chrome.storage.onChanged.addListener(function(storag){
+chrome.storage.onChanged.addListener(function (storag) {
     window[Object.keys(storag)[0]] = Object.values(Object.values(storag)[0])[0];
     console.log(Object.keys(storag)[0], "updated to", Object.values(Object.values(storag)[0])[0]);
 });
 
-// should rework how this is done. if for some reason chatlogdefault does not exist, extension will fail.
-if (document.getElementById("chatLogDefault") != "undefined" && document.getElementById("chatLogDefault") != null) {
+// REWORKED NODE INSERTER
+function setupListener() {
     // easier use
     altChatDivId = document.getElementById("altChatDiv");
     chatLogDefault = document.getElementById("chatLogDefault");
     // checks for new messages in chat
     chatLogDefault.addEventListener("DOMNodeInserted", function () {
         // Gets all information about message
+
         if (chatLogDefault.lastChild.lastChild != "undefined" && chatLogDefault.lastChild.lastChild != null) {
             var child = chatLogDefault.lastChild.lastChild;
             // ADD: user defined chat filter <--------------
+            // this does not work properly
+            if ( Array.prototype.forEach.call(child.getElementsByClassName("chat-badge"), function (x) {
+                at = x.getAttribute("alt");
+                console.log(vip, mod, ["VIP", "Moderator"].includes(at));
+                if (vip || mod) if ( (at == "VIP" && vip) || ( at == "Moderator" && mod)) { return false } else return true
+            })) {return}
 
             // ADD: user defined chat filter <--------------
-            // check if object is from a client.
+            // check if object is from a client. 
             if (child.getElementsByClassName("chat-author__display-name")[0] != "undefined" && child.getElementsByClassName("chat-author__display-name")[0] != null) {
                 var childName = child.getElementsByClassName("chat-author__display-name")[0].textContent;
                 // class: seventv-message-context
@@ -139,7 +132,7 @@ if (document.getElementById("chatLogDefault") != "undefined" && document.getElem
         // Ensures that these variables actually exist
         if (childName && childContent && childTStamp) {
             // COPIES FROM MAIN CHAT TO FILTERED CHAT WINDOW
-            if (!document.getElementById(childName + childContent + childTStamp) && document.getElementById(childName + childContent + childTStamp) != childName + childContent + childTStamp) {
+            if (!document.getElementById(childName + childContent + childTStamp)) {
                 cchild = child.cloneNode(true);
                 cchild.setAttribute("id", childName + childContent + childTStamp);
                 altChatDivId.appendChild(cchild);
@@ -155,27 +148,9 @@ if (document.getElementById("chatLogDefault") != "undefined" && document.getElem
     );
 }
 
-function userhasvip(childd) {
-    chrome.storage.sync.get("vip", (z) => {
-        var hv = false;
-        if (Object.values(z)[0]){
-            
-            Array.prototype.forEach.call(
-                childd.getElementsByClassName("chat-badge"),
-                function (x) {
-                    if (x.getAttribute("alt") == "VIP"){
-                        console.log(x.getAttribute("alt"));
-                        hv = true;
-                    }
-                    //console.log(x.getAttribute("alt"));
-                }
-            );
-            
-        }
-    });
-}
+// needs rework
 function updateScroll() {
-    if (altChatDivId.scrollHeight - altChatDivId.clientHeight <= altChatDivId.scrollTop + 1) {
+    if (altChatDivId.scrollHeight - altChatDivId.clientHeight <= altChatDivId.scrollTop + 500) {
         altChatDivId.scrollTop = altChatDivId.scrollHeight;
     }
 }
@@ -183,5 +158,3 @@ function updateScroll() {
 // jCgbLy
 // gzJAxw
 // ejGzhU <- user message
-
-// jFfYcJ <- user badges
