@@ -45,10 +45,14 @@ function loaded() {
         }
     }
 }
+
+// add variable here after inserting it in options.html
+// var must have same name as id
 // temp variables
 vip = true;
 mod = true;
 verified = true;
+prime = true;
 antiSpam = true;
 subbed = true;
 minsub = 999999999;
@@ -88,12 +92,32 @@ function setupListener() {
             var child = chatLogDefault.lastChild.lastChild;
             // ADD: user defined chat filter <--------------
             // this does not work properly
-            if ( Array.prototype.forEach.call(child.getElementsByClassName("chat-badge"), function (x) {
-                at = x.getAttribute("alt");
-                console.log(vip, mod, ["VIP", "Moderator"].includes(at));
-                if (vip || mod) if ( (at == "VIP" && vip) || ( at == "Moderator" && mod)) { return false } else return true
-            })) {return}
-
+            // if ( Array.prototype.forEach.call(child.getElementsByClassName("chat-badge"), function (x) {
+            //     at = x.getAttribute("alt");
+            //     console.log(vip, mod, ["VIP", "Moderator"].includes(at));
+            //     if (vip || mod) if ( (at == "VIP" && vip) || ( at == "Moderator" && mod)) { return false } else return true
+            // })) {return}
+            if (vip || mod || verified) {
+                checkBadge = [];
+                for (let i = 0, arr = child.getElementsByClassName("chat-badge"); i < arr.length; i++){
+                    // console.log(arr[i]);
+                    arrTib = arr[i].getAttribute("alt");
+                    if ( arrTib == "VIP" && vip){
+                        checkBadge.push(true);
+                    }
+                    else if (arrTib == "Moderator" && mod){
+                        checkBadge.push(true);
+                    }
+                    else if (arrTib == "Verified" && verified){
+                        checkBadge.push(true);
+                    }
+                    else if (arrTib == "Prime Gaming" && prime){
+                        checkBadge.push(true);
+                    }   
+                    else checkBadge.push(false);
+                }
+                if (checkBadge.includes(true)) {} else return;
+            }
             // ADD: user defined chat filter <--------------
             // check if object is from a client. 
             if (child.getElementsByClassName("chat-author__display-name")[0] != "undefined" && child.getElementsByClassName("chat-author__display-name")[0] != null) {
