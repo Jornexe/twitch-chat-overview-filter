@@ -1,6 +1,7 @@
 let vip = true;
 let mod = true;
 let verified = false;
+let prime = false;
 let antiSpam = true;
 let subbed = false;
 let minsub = 1;

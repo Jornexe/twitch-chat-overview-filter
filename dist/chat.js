@@ -96,32 +96,35 @@ function setupListener() {
         if (chatLogDefault.lastChild.lastChild != "undefined" && chatLogDefault.lastChild.lastChild != null) {
             var child = chatLogDefault.lastChild.lastChild;
             // ADD: user defined chat filter <--------------
-            // this does not work properly
-            // if ( Array.prototype.forEach.call(child.getElementsByClassName("chat-badge"), function (x) {
-            //     at = x.getAttribute("alt");
-            //     console.log(vip, mod, ["VIP", "Moderator"].includes(at));
-            //     if (vip || mod) if ( (at == "VIP" && vip) || ( at == "Moderator" && mod)) { return false } else return true
-            // })) {return}
-            if (vip || mod || verified) {
+            if (vip || mod || verified || prime) {
                 checkBadge = [];
-                for (let i = 0, arr = child.getElementsByClassName("chat-badge"); i < arr.length; i++){
+                for (let i = 0, arr = child.getElementsByClassName("chat-badge"); i < arr.length; i++) {
                     // console.log(arr[i]);
                     arrTib = arr[i].getAttribute("alt");
-                    if ( arrTib == "VIP" && vip){
+                    if (arrTib == "VIP" && vip) {
                         checkBadge.push(true);
                     }
-                    else if (arrTib == "Moderator" && mod){
+                    else if (arrTib == "Moderator" && mod) {
                         checkBadge.push(true);
                     }
-                    else if (arrTib == "Verified" && verified){
+                    else if (arrTib == "Verified" && verified) {
                         checkBadge.push(true);
                     }
-                    else if (arrTib == "Prime Gaming" && prime){
+                    else if (arrTib == "Prime Gaming" && prime) {
                         checkBadge.push(true);
-                    }   
+                    }
                     else checkBadge.push(false);
                 }
-                if (checkBadge.includes(true)) {} else return;
+                if (checkBadge.includes(true)) { } else return;
+                // // work out a method to filter these:
+                // subbed = true;
+                // minsub = 999999999;
+                // minSubGift = true;
+                // minSubGiftAmount = 999999999;
+                // minCheerMsg = true;
+                // minCheerMsgAmount = 999999999;
+                // minCheerBadge = true;
+                // minCheerBadgeAmount = 999999999;
             }
             // ADD: user defined chat filter <--------------
             // check if object is from a client. 
