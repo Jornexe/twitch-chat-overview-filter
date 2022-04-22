@@ -19,8 +19,9 @@ function loaded() {
             document.querySelectorAll('[role="log"]').forEach(function (x) {
                 x.setAttribute("id", "chatLogDefault");
             });
+
             // creates filtered chat box
-            locate = document.getElementsByClassName("gzJAxw");
+            locate = document.getElementsByClassName("chat-room__content");
             altChatDiv = document.createElement("div");
             altChatDiv.setAttribute("id", "altChatDiv");
             altChatDiv.setAttribute(
@@ -30,16 +31,22 @@ function loaded() {
             Array.prototype.forEach.call(locate, function (x) {
                 x.prepend(altChatDiv);
             });
+
+            // welcome message
             welcome1 = document.createElement("span");
             welcome1.setAttribute("class", "CoreText-sc-cpl358-0 Layout-sc-nxg1ff-0 chat-line__status");
             welcome1.innerHTML = "Welcome to the filter!";
             altChatDiv.appendChild(welcome1);
+
+            // makes the alt chat visible and forces main chat to only take so much of the screen.
+            // ADD: user defined height
             Array.prototype.forEach.call(
-                document.getElementsByClassName("ejGzhU"),
+                document.getElementsByClassName("chat-list--default"),
                 function (x) {
                     x.setAttribute("style", "height: 40% !important");
                 }
             );
+
             console.log("YEEEEEEEEEEEET", document.getElementById("altChatDiv"));
             setupListener();
         }
@@ -49,6 +56,7 @@ function loaded() {
 // add variable here after inserting it in options.html
 // var must have same name as id
 // temp variables
+enabled = true;
 vip = true;
 mod = true;
 verified = true;
@@ -122,6 +130,7 @@ function setupListener() {
                 // minCheerBadgeAmount = 999999999;
             }
             // ADD: user defined chat filter <--------------
+
             // check if object is from a client. 
             if (child.getElementsByClassName("chat-author__display-name")[0] != "undefined" && child.getElementsByClassName("chat-author__display-name")[0] != null) {
                 var childName = child.getElementsByClassName("chat-author__display-name")[0].textContent;
@@ -142,8 +151,15 @@ function setupListener() {
                                 childContent += x.textContent;
                             }
                             else {
-                                childContent += "--";
+                                childContent += "-EMPTY-";
                             }
+                        }
+                    }
+                }
+                else if (child.getElementsByClassName("chat-line__no-background") != "undefined" && child.getElementsByClassName("chat-line__no-background") != null){
+                    for (let y of child.getElementsByClassName("chat-line__no-background")){
+                        for (let x of y.lastChild.children){
+                            // duplicate the obove seventv function to work without 7tv
                         }
                     }
                 }
@@ -173,6 +189,7 @@ function setupListener() {
     },
         false
     );
+
 }
 
 // needs rework
@@ -182,6 +199,6 @@ function updateScroll() {
     }
 }
 
-// jCgbLy
-// gzJAxw
-// ejGzhU <- user message
+
+
+
