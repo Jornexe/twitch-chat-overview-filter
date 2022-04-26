@@ -17,9 +17,10 @@
     },
     "content_scripts": [
         {
-          "matches": ["*://*.twitch.tv/*"],
-          "exclude_matches": ["https://www.twitch.tv/"],
-          "js": ["chat.js"]
+          "matches": ["https://www.twitch.tv/*", "https://www.twitch.tv/moderator/*"],
+          "exclude_matches": ["https://www.twitch.tv/", "https://www.twitch.tv/*/*", "https://www.twitch.tv/directory/*"],
+          "js": ["chat.js"],
+          "css": ["assets/exstyle.css"]
         }
       ],
     "action": {

@@ -1,6 +1,6 @@
 {
     "name": "twitch-chat-overview",
-    "description": "filters out a important messages into another chat window",
+    "description": "Filters out user defined messages into another chat window. You need the 7TV chrome extension for this to work.",
     "version": "0.0.1",
     "homepage": "http://chrome.google.com/webstore",
     "author": "Jornexe",
@@ -53,12 +53,11 @@
             {
                 "name": "options",
                 "src": "./src/**/options*.js"
-
             }
-
         ]
     },
     "dependencies": {
-        "imask": "^6.4.2"
+        "imask": "^6.4.2",
+        "jquery": "^3.6.0"
     }
 }
