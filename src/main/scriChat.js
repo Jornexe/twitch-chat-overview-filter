@@ -14,8 +14,6 @@ setInterval(function () { if (document.getElementById("altChatDiv") === null) { 
 function loaded() {
     console.log("LOADED CALLLED ----> ", document.readyState);
     if (document.getElementById("altChatDiv") === null) {
-        
-
         // sets up id for copying chat to filter
         document.querySelectorAll('[role="log"]').forEach(function (x) {
             x.setAttribute("id", "chatLogDefault");
@@ -23,16 +21,6 @@ function loaded() {
 
         // creates filtered chat box
         locate = document.getElementsByClassName("chat-room__content");
-
-        // supposed to make the scroll bar fancy.
-        // does nothing atm though.
-        scrollbar = document.createElement("div");
-        scrollbar.setAttribute("id", "scrollbar-style-1");
-        scrollbar.setAttribute(
-            "style",
-            "height: 30%; position: relative; overflow-y: auto; overflow-x: hidden;"
-        );
-
         altChatDiv = document.createElement("div");
         altChatDiv.setAttribute("id", "altChatDiv");
         altChatDiv.setAttribute("class", "scrollbar-style-1");
@@ -58,9 +46,8 @@ function loaded() {
         // welcome message
         welcome1 = document.createElement("span");
         welcome1.setAttribute("class", "CoreText-sc-cpl358-0 Layout-sc-nxg1ff-0 chat-line__status");
-        console.log("------->", document.getElementsByClassName("seventv-message-context"));
-        if (false) {
-            welcome1.innerHTML = "Please install 7TV chrome extension for this to work";
+        if (document.getElementById("seventv") == null) {
+            welcome1.innerHTML = "Install <a href=\"https://chrome.google.com/webstore/detail/7tv/ammjkodgmmoknidbanneddgankgfejfh\">7TV chrome extension</a> for this to work\n";
         }
         else {
             welcome1.innerHTML = "Welcome to the filter!";
@@ -132,7 +119,7 @@ chrome.storage.onChanged.addListener(function (storag) {
 
 function altChatVisibility(bool) {
     if (document.getElementById("altChatDiv") != "undefined" && document.getElementById("altChatDiv") != null) {
-        console.log("works")
+        console.log("Visibility Toggled")
         if (bool) {
             //document.getElementById("blockhidden").style.height = "40% !important";
             document.getElementById("blockhidden").setAttribute("style", "height: 40% !important");
@@ -145,6 +132,9 @@ function altChatVisibility(bool) {
         }
     }
 }
+
+// announcement chat message classes
+// Layout-sc-nxg1ff-0 cNJbGZ announcement-line announcement-line--orange
 
 // REWORKED NODE INSERTER
 function setupListener() {
@@ -162,28 +152,28 @@ function setupListener() {
             // console.log("Inserted Node Target", insertedNode.target);
             var child = insertedNode.target;
             // ADD: user defined chat filter <--------------
+            var checkFilter = [];
             if (vip || mod || verified || prime || broadcaster) {
-                checkBadge = [];
                 for (let badges of child.getElementsByClassName("chat-badge")) {
                     arrTib = badges.getAttribute("alt");
                     if (arrTib == "VIP" && vip) {
-                        checkBadge.push(true);
+                        checkFilter.push(true);
                     }
                     else if (arrTib == "Broadcaster" && broadcaster) {
-                        checkBadge.push(true);
+                        checkFilter.push(true);
                     }
                     else if (arrTib == "Moderator" && mod) {
-                        checkBadge.push(true);
+                        checkFilter.push(true);
                     }
                     else if (arrTib == "Verified" && verified) {
-                        checkBadge.push(true);
+                        checkFilter.push(true);
                     }
                     else if (arrTib == "Prime Gaming" && prime) {
-                        checkBadge.push(true);
+                        checkFilter.push(true);
                     }
-                    else checkBadge.push(false);
+                    else checkFilter.push(false);
                 }
-                if (checkBadge.includes(true) || minCheerMsg) { } else return;
+                if (checkFilter.includes(true) || minCheerMsg) { } else return;
 
                 // // work out a method to filter these:
                 // subbed = true;
@@ -205,7 +195,7 @@ function setupListener() {
             // gets all message content
             var childContent = "";
             // console.log("seven", child.getElementsByClassName("seventv-message-context"), child.getElementsByClassName("seventv-message-context")[0]);
-            console.log("ChildObj", child);
+            // console.log("ChildObj", child);
             var messageContent;
             if (child.children[0].children[1] != "undefined" && child.children[0].children[1] != null) {
                 messageContent = child.children[0].children[1].children[0].children[0].lastChild
@@ -216,11 +206,16 @@ function setupListener() {
             // console.log("msgCont",messageContent)
             for (let messageBit of messageContent.children) {
                 if (messageBit.classList.contains("seventv-emote")) {
-                    if (minCheerMsg && messageBit.children[0].children[0].getAttribute("alt") == "Cheer") {
-
+                    if (minCheerMsg && messageBit.children[0].children[0].getAttribute("alt") == "Cheer"
+                    && messageBit.children[0].children[1].innerHTML >= minCheerMsgAmount) {
+                        childContent += messageBit.children[0].children[0].getAttribute("alt");
+                        checkFilter.push(true);
+                    }
+                    else if (checkFilter.includes(true)){
+                        childContent += messageBit.children[0].children[0].getAttribute("alt");
                     }
                     else {
-                        childContent += messageBit.children[0].children[0].getAttribute("alt");
+                        return                     
                     }
                 }
                 else if (messageBit.children[0] && messageBit.children[0].nodeName == "IMG") {
@@ -256,8 +251,8 @@ function setupListener() {
         }
         else return;
         // Ensures that these variables actually exist
-        console.log(childName, childContent, childTStamp);
-        console.log(childContent);
+        // console.log(childName, childContent, childTStamp);
+        // console.log(childContent);
         if (childName && childContent && childTStamp) {
             // COPIES FROM MAIN CHAT TO FILTERED CHAT WINDOW
             if (!document.getElementById(childName + childContent + childTStamp)) {

@@ -1,1 +1,44 @@
-chrome.runtime.onInstalled.addListener((()=>{chrome.storage.sync.set({enabled:!0}),chrome.storage.sync.set({broadcaster:!0}),chrome.storage.sync.set({vip:!0}),chrome.storage.sync.set({mod:!0}),chrome.storage.sync.set({verified:!1}),chrome.storage.sync.set({prime:!1}),chrome.storage.sync.set({antiSpam:!0}),chrome.storage.sync.set({subbed:!1}),chrome.storage.sync.set({minsub:1}),chrome.storage.sync.set({minSubGift:!1}),chrome.storage.sync.set({minSubGiftAmount:1}),chrome.storage.sync.set({minCheerMsg:!1}),chrome.storage.sync.set({minCheerMsgAmount:1}),chrome.storage.sync.set({minCheerBadge:!1}),chrome.storage.sync.set({minCheerBadgeAmount:1})}));
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!************************************!*\
+  !*** ./src/main/backgOnInstall.js ***!
+  \************************************/
+// works ↓
+let enabled = true; // enable program
+let broadcaster = true; // is the user a broadcaster
+let vip = true; // is the user a VIP
+let mod = true; // is the user a Moderator
+let verified = false; // is the user Verified
+let prime = false; // is the user Prime
+let antiSpam = true; // ← this one is always on atm. Prevents duplicate messages within the same timeframe
+let subbed = false; // does not work ↓
+let minsub = 1;
+let minSubGift = false;
+let minSubGiftAmount = 1;
+let minCheerMsg = false; // working on this
+let minCheerMsgAmount = 1; // working on this
+let minCheerBadge = false;
+let minCheerBadgeAmount = 1;
+
+
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.storage.sync.set({ enabled });
+    chrome.storage.sync.set({ broadcaster });
+    chrome.storage.sync.set({ vip });
+    chrome.storage.sync.set({ mod });
+    chrome.storage.sync.set({ verified });
+    chrome.storage.sync.set({ prime });
+    chrome.storage.sync.set({ antiSpam });
+
+    chrome.storage.sync.set({ subbed });
+    chrome.storage.sync.set({ minsub });
+    chrome.storage.sync.set({ minSubGift });
+    chrome.storage.sync.set({ minSubGiftAmount });
+    chrome.storage.sync.set({ minCheerMsg });
+    chrome.storage.sync.set({ minCheerMsgAmount });
+    chrome.storage.sync.set({ minCheerBadge });
+    chrome.storage.sync.set({ minCheerBadgeAmount });
+});
+/******/ })()
+;
+//# sourceMappingURL=background.js.map
