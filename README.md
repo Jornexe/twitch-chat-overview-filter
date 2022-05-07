@@ -2,6 +2,8 @@
 
 filters out client defined messages into another chat window
 
+you need to install [7tv extension](https://chrome.google.com/webstore/detail/7tv/ammjkodgmmoknidbanneddgankgfejfh) for this one to work
+
 ## Development 
 
 This extension was created with [Extension CLI](https://oss.mobilefirst.me/extension-cli/)!
